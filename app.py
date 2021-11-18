@@ -12,7 +12,12 @@ def index():
 @app.route("/api_views")
 def api_views():
     # connection_string = "postgresql://vwjpswzrnmptct:f7d3585048d5d8fa64b2bdb0633aa8324f01e3d4ea044a37284ddcc918b9817a@ec2-52-201-195-11.compute-1.amazonaws.com:5432/dd9j1f8aub9l0u"
-    connection_string = os.environ.get('DATABASE_URL', '')
+    # connection_string = os.environ.get('DATABASE_URL', '')
+
+    uri = os.getenv("DATABASE_URL")  # or other relevant config var
+    if uri and uri.startswith("postgres://"):
+        connection_string = uri.replace("postgres://", "postgresql://", 1)
+        
     conn = create_engine(connection_string)
     data = pd.read_sql("select * from ratings",conn)
 
@@ -30,7 +35,12 @@ def api_views():
 @app.route("/api_likes")
 def api_likes():
     # connection_string = "postgresql://vwjpswzrnmptct:f7d3585048d5d8fa64b2bdb0633aa8324f01e3d4ea044a37284ddcc918b9817a@ec2-52-201-195-11.compute-1.amazonaws.com:5432/dd9j1f8aub9l0u"
-    connection_string = os.environ.get('DATABASE_URL', '')
+    # connection_string = os.environ.get('DATABASE_URL', '')
+
+    uri = os.getenv("DATABASE_URL")  # or other relevant config var
+    if uri and uri.startswith("postgres://"):
+        connection_string = uri.replace("postgres://", "postgresql://", 1)
+
     conn = create_engine(connection_string)
     data = pd.read_sql("select * from ratings",conn)
 
